@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class SimpleCalculator implements Calculator {
@@ -20,10 +21,17 @@ public class SimpleCalculator implements Calculator {
     @Override
     public Number calculate(String string) {
         LinkedList<Node> nodeLinkedList = parser.parse(string);
-        ArrayList<Node> sortedByPriority = new ArrayList<>(nodeLinkedList);
-        sortedByPriority.sort((node1, node2) -> node2.getOperation().getPriority() - node1.getOperation().getPriority());
+        List<Node> sortedByPriority = getSortedNodes(nodeLinkedList);
         sortedByPriority.forEach(node -> processOperation(nodeLinkedList, node));
         return nodeLinkedList.getLast().getValue();
+    }
+
+    private List<Node> getSortedNodes(LinkedList<Node> nodeLinkedList) {
+        List<Node> sortedByPriority = new ArrayList<>(nodeLinkedList);
+        sortedByPriority.sort((node1, node2) ->
+                (node2.getAdditionalPriority() + node2.getOperation().getPriority())
+                        - (node1.getAdditionalPriority() + node1.getOperation().getPriority()));
+        return sortedByPriority;
     }
 
     private void processOperation(LinkedList<Node> list, Node node) {

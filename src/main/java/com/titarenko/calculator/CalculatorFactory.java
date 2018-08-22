@@ -11,7 +11,7 @@ public class CalculatorFactory {
         } else if ("JavaxCalculator".equalsIgnoreCase(calculatorName)) {
             return new JavaxCalculator();
         } else {
-            throw new NoSuchCalculatorException("Calculator " + calculatorName + " does not exist.");
+            throw new NoSuchCalculatorException("Calculator `" + calculatorName + "` does not exist.");
         }
     }
 

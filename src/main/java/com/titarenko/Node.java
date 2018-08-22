@@ -11,6 +11,7 @@ public class Node {
     private Double leftValue;
     private Double rightValue;
     private Double value;
+    private int additionalPriority = 0;
 
     public Node(Operation operation) {
         this.operation = operation;
@@ -44,20 +45,30 @@ public class Node {
         this.value = value;
     }
 
+    public int getAdditionalPriority() {
+        return additionalPriority;
+    }
+
+    public void increaseAdditionalPriority() {
+        additionalPriority += 2;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return Objects.equals(getLeftValue(), node.getLeftValue()) &&
-                Objects.equals(getRightValue(), node.getRightValue()) &&
-                Objects.equals(getValue(), node.getValue()) &&
-                Objects.equals(operation, node.operation);
+        return additionalPriority == node.additionalPriority &&
+                Objects.equals(operation, node.operation) &&
+                Objects.equals(leftValue, node.leftValue) &&
+                Objects.equals(rightValue, node.rightValue) &&
+                Objects.equals(value, node.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLeftValue(), getRightValue(), getValue(), operation);
+
+        return Objects.hash(operation, leftValue, rightValue, value, additionalPriority);
     }
 
     public static class NodeBuilder {
