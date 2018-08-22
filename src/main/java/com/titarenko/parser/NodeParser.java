@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class NodeParser implements Parser {
 
-    private static final OperationsService OPERATIONS = new OperationsService();
+    private OperationsService operations = new OperationsService();
 
     @Override
     public LinkedList<Node> parse(String str) {
@@ -15,8 +15,8 @@ public class NodeParser implements Parser {
         LinkedList<Node> list = new LinkedList<>();
         int openBracket = 0;
         for (char ch : str.toCharArray()) {
-            if (OPERATIONS.isOperationExists(ch)) {
-                Node node = new Node(OPERATIONS.obtainOperation(ch));
+            if (operations.isOperationExists(ch)) {
+                Node node = new Node(operations.obtainOperation(ch));
                 node.setLeftValue(Double.valueOf(number.toString()));
                 populate(list, node);
                 number = new StringBuilder();
@@ -36,11 +36,9 @@ public class NodeParser implements Parser {
     }
 
     private void populate(LinkedList<Node> list, Node node) {
-        if (list.isEmpty()) {
-            list.add(node);
-        } else {
+        if (!list.isEmpty()) {
             list.getLast().setRightValue(node.getLeftValue());
-            list.addLast(node);
         }
+        list.addLast(node);
     }
 }

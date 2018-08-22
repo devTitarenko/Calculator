@@ -5,7 +5,7 @@ import com.titarenko.parser.NodeParser;
 
 public class CalculatorFactory {
 
-    public static Calculator produceCalculator(String calculatorName) {
+    public Calculator produceCalculator(String calculatorName) {
         if ("SimpleCalculator".equalsIgnoreCase(calculatorName)) {
             return new SimpleCalculator(new NodeParser());
         } else if ("JavaxCalculator".equalsIgnoreCase(calculatorName)) {

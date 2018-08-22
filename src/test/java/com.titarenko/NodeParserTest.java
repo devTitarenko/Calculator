@@ -1,6 +1,5 @@
 package com.titarenko;
 
-import com.titarenko.calculator.SimpleCalculator;
 import com.titarenko.parser.NodeParser;
 import com.titarenko.parser.Parser;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class NodeParserTest {
 

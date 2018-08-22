@@ -49,6 +49,10 @@ public class Node {
         return additionalPriority;
     }
 
+    public void setAdditionalPriority(int additionalPriority) {
+        this.additionalPriority = additionalPriority;
+    }
+
     public void increaseAdditionalPriority() {
         additionalPriority += 2;
     }
@@ -85,6 +89,11 @@ public class Node {
 
         public NodeBuilder withRightValue(Double rightValue) {
             node.setRightValue(rightValue);
+            return this;
+        }
+
+        public NodeBuilder withAdditionalPriority(int additionalPriority) {
+            node.setAdditionalPriority(additionalPriority);
             return this;
         }
 

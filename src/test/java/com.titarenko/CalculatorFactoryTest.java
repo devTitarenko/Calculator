@@ -11,15 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CalculatorFactoryTest {
 
+    private CalculatorFactory factory = new CalculatorFactory();
+
     @Test
     void testProduceCalculator() {
-        assertEquals(JavaxCalculator.class, CalculatorFactory.produceCalculator("JavaxCalculator").getClass());
-        assertEquals(SimpleCalculator.class, CalculatorFactory.produceCalculator("simplecalculator").getClass());
+        assertEquals(JavaxCalculator.class, factory.produceCalculator("JavaxCalculator").getClass());
+        assertEquals(SimpleCalculator.class, factory.produceCalculator("simplecalculator").getClass());
     }
 
     @Test
     void testException() {
         assertThrows(NoSuchCalculatorException.class,
-                () -> CalculatorFactory.produceCalculator("Binar"), "Calculator `Binar` does not exist.");
+                () -> factory.produceCalculator("Binar"), "Calculator `Binar` does not exist.");
     }
 }

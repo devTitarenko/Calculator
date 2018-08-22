@@ -10,10 +10,13 @@ public class Main {
         String calculatorName = args.length > 1 ? args[0] : "SimpleCalculator";
         Scanner input = new Scanner(System.in);
 
-        while (true) {
+        boolean isContinue = true;
+        while (isContinue) {
             String string = input.nextLine();
             if (Validator.isValid(string)) {
-                System.out.println(CalculatorFactory.produceCalculator(calculatorName).calculate(string));
+                System.out.println(new CalculatorFactory().produceCalculator(calculatorName).calculate(string));
+            } else if ("exit".equals(string)) {
+                isContinue = false;
             } else {
                 System.err.println("Wrong format");
             }
