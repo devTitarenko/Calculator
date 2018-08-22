@@ -1,25 +1,26 @@
 package com.titarenko.parser;
 
 import com.titarenko.Node;
-import com.titarenko.operations.impl.OperationStrategy;
+import com.titarenko.operations.impl.OperationsService;
 
 import java.util.LinkedList;
 
-public class SimpleParserImpl implements Parser {
+public class NodeParser implements Parser {
+
+    private static final OperationsService OPERATIONS = new OperationsService();
 
     @Override
     public LinkedList<Node> parse(String str) {
         StringBuilder number = new StringBuilder();
         LinkedList<Node> list = new LinkedList<>();
-        OperationStrategy strategy = new OperationStrategy();
         for (char ch : str.toCharArray()) {
-            if (ch != '+' && ch != '-' && ch != '*' && ch != '/') {
-                number.append(ch);
-            } else {
-                Node node = new Node(strategy.obtainOperation(ch + ""));
+            if (OPERATIONS.isOperationExists(ch)) {
+                Node node = new Node(OPERATIONS.obtainOperation(ch));
                 node.setLeftValue(Double.valueOf(number.toString()));
                 populate(list, node);
                 number = new StringBuilder();
+            } else {
+                number.append(ch);
             }
         }
         list.getLast().setRightValue(Double.valueOf(number.toString()));

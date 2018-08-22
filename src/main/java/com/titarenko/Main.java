@@ -1,23 +1,22 @@
 package com.titarenko;
 
-import com.titarenko.calculator.Calculator;
-import com.titarenko.calculator.CalculatorImpl;
-import com.titarenko.parser.Parser;
-import com.titarenko.parser.SimpleParserImpl;
+import com.titarenko.calculator.CalculatorFactory;
 
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
+        String calculatorName = args.length > 1 ? args[0] : "SimpleCalculator";
+        Scanner input = new Scanner(System.in);
 
-        Parser parser = new SimpleParserImpl();
-        LinkedList<Node> collection = parser.parse(str);
-
-        Calculator calculator = new CalculatorImpl();
-        System.out.println(calculator.calculate(collection));
+        while (true) {
+            String string = input.nextLine();
+            if (Validator.isValid(string)) {
+                System.out.println(CalculatorFactory.produceCalculator(calculatorName).calculate(string));
+            } else {
+                System.err.println("Wrong format");
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.titarenko;
 
 import com.titarenko.operations.Operation;
-import com.titarenko.operations.impl.OperationStrategy;
+import com.titarenko.operations.impl.OperationsService;
 
 import java.util.Objects;
 
@@ -64,7 +64,7 @@ public class Node {
         private Node node;
 
         public NodeBuilder(CharSequence ch) {
-            node = new Node(new OperationStrategy().obtainOperation(ch));
+            node = new Node(new OperationsService().obtainOperation(ch));
         }
 
         public NodeBuilder withLeftValue(Double leftValue) {
