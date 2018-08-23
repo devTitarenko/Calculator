@@ -1,9 +1,5 @@
 package com.titarenko.parser;
 
-import com.titarenko.Node;
-
-import java.util.LinkedList;
-
-public interface Parser {
-    LinkedList<Node> parse(String str);
+public interface Parser<T> {
+    T parse(String str);
 }

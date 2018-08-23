@@ -1,7 +1,7 @@
 package com.titarenko;
 
+import com.titarenko.parser.NodeParserImpl;
 import com.titarenko.parser.NodeParser;
-import com.titarenko.parser.Parser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +9,9 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class NodeParserTest {
+class NodeParserImplTest {
 
-    private Parser parser;
+    private NodeParser nodeParser;
     private static final String SUM = "+";
     private static final String MINUS = "-";
     private static final String DIVIDE = "/";
@@ -20,7 +20,7 @@ class NodeParserTest {
 
     @BeforeEach
     void setup() {
-        parser = new NodeParser();
+        nodeParser = new NodeParserImpl();
     }
 
     @Test
@@ -33,7 +33,7 @@ class NodeParserTest {
             add(new Node.NodeBuilder(SUM).withLeftValue(2.5D).withRightValue(18D).build());
         }};
 
-        assertEquals(nodes, parser.parse(INPUT_1));
+        assertEquals(nodes, nodeParser.parse(INPUT_1));
     }
 
 }

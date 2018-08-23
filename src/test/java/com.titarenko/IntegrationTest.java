@@ -3,7 +3,7 @@ package com.titarenko;
 import com.titarenko.calculator.Calculator;
 import com.titarenko.calculator.JavaxCalculator;
 import com.titarenko.calculator.SimpleCalculator;
-import com.titarenko.parser.NodeParser;
+import com.titarenko.parser.NodeParserImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +16,7 @@ class IntegrationTest {
 
     @Test
     void testSimpleCalculatorWithNodeParser() {
-        calculator = new SimpleCalculator(new NodeParser());
+        calculator = new SimpleCalculator(new NodeParserImpl());
 
         assertEquals(6.2, calculator.calculate("1+2*3-4/5"));
         assertEquals(22D, calculator.calculate("5*(2+3)-(9-3)/2"));

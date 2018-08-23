@@ -1,26 +1,23 @@
 package com.titarenko.calculator;
 
 import com.titarenko.Node;
-import com.titarenko.parser.Parser;
+import com.titarenko.parser.NodeParser;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 public class SimpleCalculator implements Calculator {
 
-    private Parser parser;
+    private NodeParser nodeParser;
 
-    public SimpleCalculator(Parser parser) {
-        this.parser = parser;
+    public SimpleCalculator(NodeParser nodeParser) {
+        this.nodeParser = nodeParser;
     }
 
     @Override
     public Number calculate(String string) {
-        LinkedList<Node> nodeLinkedList = parser.parse(string);
+        LinkedList<Node> nodeLinkedList = nodeParser.parse(string);
         List<Node> sortedByPriority = getSortedNodes(nodeLinkedList);
         sortedByPriority.forEach(node -> processOperation(nodeLinkedList, node));
         return nodeLinkedList.getLast().getValue();
