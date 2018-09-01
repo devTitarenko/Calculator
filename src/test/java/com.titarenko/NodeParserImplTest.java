@@ -1,7 +1,7 @@
 package com.titarenko;
 
-import com.titarenko.parser.NodeParserImpl;
 import com.titarenko.parser.NodeParser;
+import com.titarenko.parser.NodeParserImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

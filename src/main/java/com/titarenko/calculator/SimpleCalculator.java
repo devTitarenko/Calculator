@@ -4,11 +4,15 @@ import com.titarenko.Node;
 import com.titarenko.parser.NodeParser;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleCalculator implements Calculator {
 
+    private static final Pattern PATTERN = Pattern.compile("\\((?<bracket>[+-/*\\d]+)\\)");
     private NodeParser nodeParser;
 
     public SimpleCalculator(NodeParser nodeParser) {
@@ -16,18 +20,26 @@ public class SimpleCalculator implements Calculator {
     }
 
     @Override
-    public Number calculate(String string) {
-        LinkedList<Node> nodeLinkedList = nodeParser.parse(string);
+    public Double calculate(String string) {
+        LinkedList<Node> nodeLinkedList = nodeParser.parse(processBrackets(string));
         List<Node> sortedByPriority = getSortedNodes(nodeLinkedList);
         sortedByPriority.forEach(node -> processOperation(nodeLinkedList, node));
         return nodeLinkedList.getLast().getValue();
     }
 
+    private String processBrackets(String string) {
+        Matcher matcher = PATTERN.matcher(string);
+        while (matcher.find()) {
+            String bracket = matcher.group("bracket");
+            string = string.replace("(" + bracket + ")", String.valueOf(calculate(bracket)));
+            matcher = PATTERN.matcher(string);
+        }
+        return string;
+    }
+
     private List<Node> getSortedNodes(LinkedList<Node> nodeLinkedList) {
         List<Node> sortedByPriority = new ArrayList<>(nodeLinkedList);
-        sortedByPriority.sort((node1, node2) ->
-                (node2.getAdditionalPriority() + node2.getOperation().getPriority())
-                        - (node1.getAdditionalPriority() + node1.getOperation().getPriority()));
+        sortedByPriority.sort(Comparator.comparing(Node::getOperation));
         return sortedByPriority;
     }
 

@@ -6,9 +6,9 @@ import javax.script.ScriptException;
 public class JavaxCalculator implements Calculator {
 
     @Override
-    public Number calculate(String string) {
+    public Double calculate(String string) {
         try {
-            return (Number) new ScriptEngineManager().getEngineByName("JavaScript").eval(string);
+            return Double.valueOf(new ScriptEngineManager().getEngineByName("JavaScript").eval(string) + "");
         } catch (ScriptException e) {
             throw new RuntimeException(e);
         }

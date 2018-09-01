@@ -13,26 +13,32 @@ public class NodeParserImpl implements NodeParser {
     public LinkedList<Node> parse(String str) {
         StringBuilder number = new StringBuilder();
         LinkedList<Node> list = new LinkedList<>();
-        int openBracket = 0;
         for (char ch : str.toCharArray()) {
-            if (operations.isOperationExists(ch)) {
+            if (operations.isOperationExists(ch) &&
+                    !(ch == '-' && number.length() == 0 || "-".equals(number.toString()))) {
                 Node node = new Node(operations.obtainOperation(ch));
-                node.setLeftValue(Double.valueOf(number.toString()));
+                node.setLeftValue(obtainDoubleValue(number));
                 populate(list, node);
                 number = new StringBuilder();
-            } else if (ch == '(') {
-                openBracket = list.size();
-            } else if (ch == ')') {
-                for (int i = openBracket; i < list.size(); i++) {
-                    list.get(i).increaseAdditionalPriority();
-                }
-                openBracket = 0;
             } else {
                 number.append(ch);
             }
         }
-        list.getLast().setRightValue(Double.valueOf(number.toString()));
+
+        if (list.isEmpty()) {
+            list.addLast(createSingleNumberNode(obtainDoubleValue(number)));
+        } else {
+            list.getLast().setRightValue(obtainDoubleValue(number));
+        }
         return list;
+    }
+
+    private Node createSingleNumberNode(Double number) {
+        return new Node.NodeBuilder("+").withLeftValue(0D).withRightValue(number).build();
+    }
+
+    private Double obtainDoubleValue(StringBuilder stringBuilder) {
+        return Double.valueOf(stringBuilder.toString().replace("--", ""));
     }
 
     private void populate(LinkedList<Node> list, Node node) {
